@@ -1,0 +1,9 @@
+export const primaryColor = "#466d86";
+export const secondaryColor = "#5f4686";
+export const tertiaryColor = "#86464e";
+export const breathingColor = "#464e86";
+export const analogusColor = '#867e46'
+export const neutralColor = "#3a3c3f";
+export const backgroundColor = "#25292e";
+export const blankColor = "#FFFFFF";
+export const textColor = "#000000";
