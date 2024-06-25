@@ -10,6 +10,7 @@ import {
 import { neutralColor, blankColor } from "./colors";
 
 const MyImagePicker = ({
+  columnCount,
   selectedImageIndex,
   setSelectedImageIndex,
   initialReturnedPrompt,
@@ -40,30 +41,42 @@ const MyImagePicker = ({
     }
   }, [selectedImageIndex]);
 
+  function isStartOrEndOfRow(index) {
+    const isLastInRow = (selectedImageIndex + 1) % columnCount === 0 || selectedImageIndex === imageSource.length - 1;
+    const isFirstInRow = selectedImageIndex % columnCount === 0;
+    
+    return selectedImageIndex === index + (isFirstInRow ? -1 : 1) || selectedImageIndex === index + (isFirstInRow ? -2 : isLastInRow ? 2 : -1);
+  }
+  
   return (
-    <>
-      <View style={styles.flatListContainer}>
+      <View style={[styles.flatListContainer]}>
         <FlatList
+          showsVerticalScrollIndicator={false}
           data={imageSource}
-          numColumns={window.width < 1000 ? 2 : 3}
+          key={columnCount} 
+          numColumns={columnCount}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item: source, index }) => (
             <View
               style={[
                 styles.imageColumnContainer,
                 {
+                  
                   width:
-                    selectedImageIndex == index + 1
+                    isStartOrEndOfRow(index)
                       ? 0
                       : selectedImageIndex === index
                         ? 330
-                        : 160,
+                        : 105,
                   height:
                     window.width < 1000 && selectedImageIndex == index
                       ? containerHeight
                       : selectedImageIndex === index
                         ? 440
-                        : 160,
+                        : 105,
+                  margin: 0,
+                  marginTop: selectedImageIndex === index ? 20 : 0,
+                  overflow: "visible"
                 },
               ]}
             >
@@ -83,17 +96,17 @@ const MyImagePicker = ({
                       alignItems: "flex-start",
                       justifyContent: "flex-start",
                       width:
-                        selectedImageIndex == index + 1
+                      isStartOrEndOfRow(index)
                           ? 0
                           : selectedImageIndex === index
                             ? 320
                             : 100,
                       height:
-                        selectedImageIndex == index + 1
+                      isStartOrEndOfRow(index)
                           ? 0
                           : selectedImageIndex === index
                             ? 400
-                            : 110,
+                            : 100,
                       borderRadius: selectedImageIndex === index ? 30 : 0,
                     },
                   ]}
@@ -105,13 +118,13 @@ const MyImagePicker = ({
                     style={[
                       {
                         width:
-                          selectedImageIndex == index + 1
+                        isStartOrEndOfRow(index)
                             ? 0
                             : selectedImageIndex === index
                               ? 320
                               : 100,
                         height:
-                          selectedImageIndex == index + 1
+                        isStartOrEndOfRow(index)
                             ? 0
                             : selectedImageIndex === index
                               ? 400
@@ -139,7 +152,7 @@ const MyImagePicker = ({
           )}
         />
       </View>
-    </>
+    
   );
 };
 
@@ -148,11 +161,11 @@ const styles = StyleSheet.create({
   flatListContainer: {
     width: "auto",
     height: "auto",
+    showsVerticalScrollIndicator: false,
   },
   imageColumnContainer: {
     alignItems: "center",
     flexDirection: "column",
-    overflow: "auto",
   },
   columnContainer: {
     flex: 1,
@@ -183,6 +196,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
+    showsVerticalScrollIndicator: false,
   },
   changeButton: {
     width: 20,
