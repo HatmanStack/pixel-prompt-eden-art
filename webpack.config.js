@@ -9,7 +9,7 @@ module.exports = async function(env, argv) {
     crypto: require.resolve('crypto-browserify'),
     stream: require.resolve('stream-browserify'),
     https: require.resolve('https-browserify'),
-    http: require.resolve('stream-http'),  // Add this line
+    http: require.resolve('stream-http'),  
   
   };
 
