@@ -4,8 +4,7 @@
 
 ## Preview :zap:
 
-A different version can be found on Hugging Face Spaces [here](https://huggingface.co/spaces/Hatman/pixel-prompt).
-
+To preview the application visit the hosted version on the Hugging Face Spaces platform [here](https://hatman-pixel-prompt.hf.space).
 
 ## Prerequisites
 
